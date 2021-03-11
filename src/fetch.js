@@ -1,26 +1,25 @@
 import { TrustpilotApi } from 'trustpilot';
-import ConfigException from './ConfigException';
 
 class TrustPilotFetcher {
-    constructor({apiKey, secretKey, username, password, domains}) {
+    constructor({ apiKey, secretKey, username, password, domains }) {
         if (!apiKey || apiKey === '') {
-            throw new ConfigException('Trustpilot API Key missing. Make sure to provide an API key in the config');
+            throw new Error('Trustpilot API Key missing. Make sure to provide an API key in the config');
         }
 
         if (!secretKey || secretKey === '') {
-            throw new ConfigException('Trustpilot Secret Key missing. Make sure to provide a Secret Key in the config');
+            throw new Error('Trustpilot Secret Key missing. Make sure to provide a Secret Key in the config');
         }
 
         if (!username || username === '') {
-            throw new ConfigException('Trustpilot Username missing. Make sure to provide a username in the config');
+            throw new Error('Trustpilot Username missing. Make sure to provide a username in the config');
         }
 
         if (!password || password === '') {
-            throw new ConfigException('Trustpilot Password missing. Make sure to provide a password in the config');
+            throw new Error('Trustpilot Password missing. Make sure to provide a password in the config');
         }
 
         if (!domains || !Array.isArray(domains) || domains.length === 0) {
-            throw new ConfigException('You need to provide at least one domain in your gatsby config. Please refer to gatsby-source-trustpilot documentation');
+            throw new Error('You need to provide at least one domain in your gatsby config. Please refer to gatsby-source-trustpilot documentation');
         }
 
         this.apiKey = apiKey;
@@ -44,7 +43,7 @@ class TrustPilotFetcher {
             );
 
             if (!res || !res.id) {
-                throw new ConfigException(`Business Unit ID not found for domain: ${domain}`);
+                throw new Error(`Business Unit ID not found for domain: ${domain}`);
             }
 
             this.unitIds.push({
